@@ -27,7 +27,7 @@ const useChainStats = (
     const currentGasPrice = await chainStats.getCurrentGasPrice();
     const latestBlock = await chainStats.getLatestBlock();
     const blockWithTransactions = await chainStats.getBlockWithTransactions(
-      parseInt(latestBlock.number) - 1
+      parseInt(latestBlock.number)
     );
 
     console.log(blockWithTransactions);
