@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
+import { ethers } from "ethers";
+
 import { NetworkContext } from "../contexts/NetworkProvider";
 import useMempool from "../hooks/useMempool";
 import useChainStats from "../hooks/useChainStats";
 import shortenAddress from "../helpers/shorten-address";
-import { ethers } from "ethers";
+import { BLOCK_EXPLORERS } from "../constants";
 
 const NetworkStats = () => {
   const networkContext = useContext(NetworkContext);
@@ -70,12 +72,12 @@ const NetworkStats = () => {
             <div className="overflow-y-auto">
               {stats.blockWithTransactions.transactions.map(
                 (tx: any, index: number) => (
-                  <div key={index} className="grid grid-cols-4">
+                  <a key={index} className="grid grid-cols-4" target={"_blank"} href={`${BLOCK_EXPLORERS[networkContext?.chainId!]}/tx/${tx.hash}`}>
                     <p>From: {shortenAddress(tx.from)}</p>
                     <p>To: {shortenAddress(tx.to)}</p>
                     <p>Value: {ethers.utils.formatEther(tx.value)}</p>
                     <p className="truncate">Tx hash: {tx.hash}</p>
-                  </div>
+                  </a>
                 )
               )}
             </div>

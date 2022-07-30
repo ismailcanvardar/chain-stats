@@ -10,17 +10,19 @@ interface IStats {
 
 const FETCH_INTERVAL = 10000;
 
+const DEFAULT_STATS = {
+  currentGasPrice: undefined,
+  latestBlock: undefined,
+  blockWithTransactions: undefined,
+};
+
 // Gets chain stats from ChainStats class and updates the stats state according to IStats interface values
 const useChainStats = (
   httpProvider: ethers.providers.JsonRpcProvider
 ): [stats: IStats] => {
   const chainStats: IChainStats = new ChainStats(httpProvider);
 
-  const [stats, setStats] = useState<IStats>({
-    currentGasPrice: undefined,
-    latestBlock: undefined,
-    blockWithTransactions: undefined,
-  });
+  const [stats, setStats] = useState<IStats>(DEFAULT_STATS);
 
   // Gets current gas price, latest block number and block with transactions
   const fetchStats = async (): Promise<IStats> => {
@@ -29,8 +31,6 @@ const useChainStats = (
     const blockWithTransactions = await chainStats.getBlockWithTransactions(
       parseInt(latestBlock.number)
     );
-
-    console.log(blockWithTransactions);
 
     return {
       currentGasPrice,
@@ -42,6 +42,7 @@ const useChainStats = (
   // Reset stats if provider changes
   useEffect(() => {
     if (httpProvider) {
+      setStats(DEFAULT_STATS);
       fetchStats().then((stats) => setStats(stats));
     }
   }, [httpProvider]);

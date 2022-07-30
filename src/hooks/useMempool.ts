@@ -8,7 +8,9 @@ const useMempool = (
   const [txs, setTxs] = useState<string[]>([]);
 
   useEffect(() => {
-    setTxs([]);
+    if (wssProvider) {
+      setTxs([]);
+    }
   }, [wssProvider]);
 
   // This method listens to the mempool and updates the txs state
