@@ -15,7 +15,6 @@ const NetworkBox: React.FC = () => {
         </div>
         <div className="flex justify-end flex-1 pr-8">
           <div className="flex items-stretch">
-            <a className="btn btn-ghost rounded-btn">Button</a>
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost rounded-btn">
                 {networkContext?.name}
